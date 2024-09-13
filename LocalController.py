@@ -113,30 +113,55 @@ class LocalController:
                         conn.sendall('data received'.encode())
 
 if __name__ == '__main__':
-    controller = LocalController(1)
-    controller.ip_port = ['localhost', 2121]
+    parser = argparse.ArgumentParser(description='Local Controller')
+    parser.add_argument('--config', type=str, help='config file path')
+    args = parser.parse_args()
+    config_file = args.config
+    config = json.load(open(config_file,'r'))
+    
+    ASN = config['ASN']
+    speakers = config['router_name_set']
+    EBGP_peers = config['EBGP_peers']
+    ip_router = config['ip_router']
+    compute_controller_address = config['compute_controller_address']
+    federate_controller_address = config['federate_controller_address']
+    ebgp_recieve_port = config['ebgp_recieve_port']
+    
+    controller = LocalController(ASN)
+    
+    controller.ip_port = [compute_controller_address['ip'], compute_controller_address['port']]
     # 拾取拓扑
-    controller.add_speaker(1, '1.1')
-    controller.add_speaker(1, '1.2')
-    controller.add_speaker(1, '1.3')
+    for speaker in speakers:
+        controller.add_speaker(ASN, speaker)
+    # controller.add_speaker(1, '1.1')
+    # controller.add_speaker(1, '1.2')
+    # controller.add_speaker(1, '1.3')
+    for speaker in speakers:
+        for peer in speakers:
+            if speaker != peer:
+                controller.add_IBGP_peer(speaker, peer)
 
-    controller.add_IBGP_peer('1.1', '1.2')
-    controller.add_IBGP_peer('1.2', '1.3')
-    controller.add_IBGP_peer('1.3', '1.1')
+    # controller.add_IBGP_peer('1.1', '1.2')
+    # controller.add_IBGP_peer('1.2', '1.3')
+    # controller.add_IBGP_peer('1.3', '1.1')
 
-    controller.add_EBGP_peer('1.3', '2.3', ['localhost', 212])
+    for ebgp_peer in EBGP_peers:
+        controller.add_EBGP_peer(ebgp_peer['intern_router'], ebgp_peer['extern_router'], [ebgp_peer['extern_controller_ip'], ebgp_peer['extern_controller_port']])
+    # controller.add_EBGP_peer('1.3', '2.3', ['localhost', 212])
 
-    controller.BGPspeakers['1.1'].net_add('1.1.0.1')
-    controller.BGPspeakers['1.1'].net_add('1.1.0.2')
+    for key, value in ip_router.items():
+        controller.BGPspeakers[value].net_add(key)
+    # controller.BGPspeakers['1.1'].net_add('1.1.0.1')
+    # controller.BGPspeakers['1.1'].net_add('1.1.0.2')
 
-    controller.BGPspeakers['1.2'].net_add('1.2.0.1')
-    controller.BGPspeakers['1.2'].net_add('1.2.0.2')
+    # controller.BGPspeakers['1.2'].net_add('1.2.0.1')
+    # controller.BGPspeakers['1.2'].net_add('1.2.0.2')
 
     # 一个线程与联邦控制器建立连接，一个线程监听EBGP连接
     flag = True
 
-    t1 = threading.Thread(target=controller.connect_to_fed_controller, args=('localhost', 111))
-    t2 = threading.Thread(target=controller.ebgp_recieve_server, args=('localhost', 112))
+    t1 = threading.Thread(target=controller.connect_to_fed_controller, args=(federate_controller_address['ip'], federate_controller_address['port']))
+    t2 = threading.Thread(target=controller.ebgp_recieve_server, args=('localhost', ebgp_recieve_port))
     t1.start()
     t2.start()
     t1.join()

@@ -1,5 +1,7 @@
 import socket
 import time
+import json
+import argparse
 
 class FedController:
     '''
@@ -61,6 +63,15 @@ class FedController:
 
 
 if __name__ == '__main__':
-    AS_to_connect = {1: ['localhost', 111], 2: ['localhost', 211]}
+    parser = argparse.ArgumentParser(description='Federate Controller')
+    parser.add_argument('--config', type=str, help='config file path')
+    args = parser.parse_args()
+    config_file = args.config
+    config = json.load(open(config_file,'r'))
+    AS_to_connect = {}
+    ASController_listen_addresses = config['ASController_listen_addresses']
+    for key, value in ASController_listen_addresses.items():
+        AS_to_connect[key] = [value['ip'], value['port']]
+    # AS_to_connect = {1: ['localhost', 111], 2: ['localhost', 211]}
     controller = FedController(AS_to_connect)
     controller.work()

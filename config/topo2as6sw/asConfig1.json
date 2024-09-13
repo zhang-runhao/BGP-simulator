@@ -8,15 +8,20 @@
     "EBGP_peers": [
         {
             "intern_router": "1.3",
-            "extern_router": "2.1",
+            "extern_router": "2.3",
             "extern_controller_ip": "localhost",
             "extern_controller_port": 212
         }
     ],
     "ip_router": {
-        "H8": "sw7",
-        "H7": "sw8",
-        "H6": "sw9"
+        "1.1.0.1": "1.1",
+        "1.1.0.2": "1.1",
+        "1.2.0.1": "1.2",
+        "1.2.0.2": "1.2"
+    },
+    "compute_controller_address": {
+        "ip": "localhost",
+        "port": 2121
     },
     "federate_controller_address": {
         "ip": "localhost",

@@ -1,0 +1,43 @@
+{
+    "ASN": 3,
+    "router_name_set":[
+        "sw10",
+        "sw11",
+        "sw12",
+        "sw13",
+        "sw14"
+    ],
+    "EBGP_peers": [
+        {
+            "intern_router": "sw14",
+            "extern_router": "sw8",
+            "extern_controller_ip": "localhost",
+            "extern_controller_port": 1212
+        },
+        {
+            "intern_router": "sw10",
+            "extern_router": "sw9",
+            "extern_controller_ip": "localhost",
+            "extern_controller_port": 1212
+        },
+        {
+            "intern_router": "sw13",
+            "extern_router": "sw17",
+            "extern_controller_ip": "localhost",
+            "extern_controller_port": 1412
+        }
+    ],
+    "ip_router": {
+        "H5": "sw10",
+        "H4": "sw13"
+    },
+    "compute_controller_address": {
+        "ip": "localhost",
+        "port": 2321
+    },
+    "federate_controller_address": {
+        "ip": "localhost",
+        "port": 1311
+    },
+    "ebgp_recieve_port": 1312
+}

@@ -41,7 +41,7 @@ class BGPspeaker:
     '''
     def net_add(self, IP_prefix):
         self.IPprefix.add(IP_prefix)
-        self.Routing_table[IP_prefix] = [self.Router_id, 100, [self.AS_number], 2]
+        self.Routing_table[IP_prefix] = [self.Router_id, 200, [self.AS_number], 2]
 
     '''
     向ibgp邻居宣告路由 
