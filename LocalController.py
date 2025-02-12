@@ -3,6 +3,7 @@ import socket
 import threading
 import json
 import argparse
+import os
 
 class LocalController:
     '''
@@ -167,11 +168,23 @@ if __name__ == '__main__':
     t1.join()
     t2.join()
 
+    # 打印每个speaker的路由表
     for speaker in controller.BGPspeakers:
         for key, value in controller.BGPspeakers[speaker].Routing_table.items():
             print(f'{speaker} routing table: {key} {value}')
 
+    
+    # Save routing tables to a JSON file
+    routing_tables = {}
+    for speaker in controller.BGPspeakers:
+        routing_tables[speaker] = controller.BGPspeakers[speaker].Routing_table
 
+    # Create directory if it doesn't exist
+    directory = 'routing_tables'
+    if not os.path.exists(directory):
+        os.makedirs(directory)
 
-
+    # Save routing tables to a JSON file
+    with open(f'{directory}/routing_table_AS{controller.AS_number}.json', 'w') as f:
+        json.dump(routing_tables, f, indent=4)
     

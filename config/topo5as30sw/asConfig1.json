@@ -5,31 +5,26 @@
         "sw2",
         "sw3",
         "sw4",
-        "sw5"
+        "sw5",
+        "sw6"
     ],
     "EBGP_peers": [
         {
-            "intern_router": "sw1",
-            "extern_router": "sw19",
+            "intern_router": "sw6",
+            "extern_router": "sw8",
             "extern_controller_ip": "localhost",
-            "extern_controller_port": 1412
+            "extern_controller_port": 1212
         },
         {
             "intern_router": "sw3",
-            "extern_router": "sw20",
+            "extern_router": "sw32",
             "extern_controller_ip": "localhost",
-            "extern_controller_port": 1412
-        },
-        {
-            "intern_router": "sw5",
-            "extern_router": "sw6",
-            "extern_controller_ip": "localhost",
-            "extern_controller_port": 1212
+            "extern_controller_port": 1512
         }
     ],
     "ip_router": {
-        "H1": "sw1",
-        "H9": "sw4"
+        "H1": "sw3",
+        "H2": "sw1"
     },
     "compute_controller_address": {
         "ip": "localhost",
