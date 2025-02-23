@@ -14,7 +14,7 @@ class AStopo:
 if __name__ == '__main__':
     as_topo = {}
     parser = argparse.ArgumentParser(description='Local Controller')
-    parser.add_argument('--topo', type=str, default='./fulltopo/topo5as30sw/')
+    parser.add_argument('--topo', type=str, default='./fulltopo/5as32sw_0220/')
     args = parser.parse_args()
     host_as_dict = {}
     sw_as_dict = {}

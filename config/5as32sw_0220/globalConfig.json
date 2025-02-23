@@ -1,0 +1,24 @@
+{
+    "ASController_listen_addresses": {
+        "1": {
+            "ip": "localhost",
+            "port": 8001
+        },
+        "2": {
+            "ip": "localhost",
+            "port": 8002
+        },
+        "3": {
+            "ip": "localhost",
+            "port": 8003
+        },
+        "4": {
+            "ip": "localhost",
+            "port": 8004
+        },
+        "5": {
+            "ip": "localhost",
+            "port": 8005
+        }
+    }
+}

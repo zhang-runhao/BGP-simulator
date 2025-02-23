@@ -1,0 +1,40 @@
+{
+    "ASN": 4,
+    "router_name_set": [
+        "21",
+        "22",
+        "23",
+        "24",
+        "25"
+    ],
+    "EBGP_peers": [
+        {
+            "intern_router": "22",
+            "extern_router": "20",
+            "extern_controller_ip": "localhost",
+            "extern_controller_port": 9003
+        },
+        {
+            "intern_router": "25",
+            "extern_router": "26",
+            "extern_controller_ip": "localhost",
+            "extern_controller_port": 9005
+        }
+    ],
+    "ip_router": {
+        "10.0.0.21": "21",
+        "10.0.0.22": "22",
+        "10.0.0.23": "23",
+        "10.0.0.24": "24",
+        "10.0.0.25": "25"
+    },
+    "compute_controller_address": {
+        "ip": "localhost",
+        "port": 7004
+    },
+    "federate_controller_address": {
+        "ip": "localhost",
+        "port": 8004
+    },
+    "ebgp_recieve_port": 9004
+}
