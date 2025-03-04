@@ -66,6 +66,8 @@ class BGPspeaker:
     如果在路由表中,如果新的localpref更大,或者localpref相等但是AS路径更短,则更新路由表
     '''
     def receive_path_from_IBGP_peer(self, IP_prefix, path_to_receive, Router_id, localpref=100):
+        localpref = self.get_localpref(IP_prefix, path_to_receive, self.ip_port[0], self.ip_port[1])
+        path_to_receive[1] = localpref
         if IP_prefix not in self.Routing_table:
             self.Routing_table[IP_prefix] = copy.deepcopy(path_to_receive)
             self.Routing_table[IP_prefix][0] = Router_id
@@ -125,11 +127,13 @@ class BGPspeaker:
     更新AS路径
     '''
     def receive_path_from_EBGP_peer(self, IP_prefix, path_to_receive, Router_id, localpref=100):
+        localpref = self.get_localpref(IP_prefix, path_to_receive, self.ip_port[0], self.ip_port[1])
+        path_to_receive[1] = localpref
         if IP_prefix not in self.Routing_table:
             self.Routing_table[IP_prefix] = copy.deepcopy(path_to_receive)
             self.Routing_table[IP_prefix][2].append(self.AS_number)
             self.Routing_table[IP_prefix][0] = Router_id
-            localpref = self.get_localpref(IP_prefix, self.Routing_table[IP_prefix], self.ip_port[0], self.ip_port[1])
+            # localpref = self.get_localpref(IP_prefix, self.Routing_table[IP_prefix], self.ip_port[0], self.ip_port[1])
             self.Routing_table[IP_prefix][1] = localpref
             self.Routing_table[IP_prefix][3] = 2 # 标志位设为2表示还需宣告给IBGP和EBGP
         else:
