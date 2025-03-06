@@ -43,7 +43,7 @@ class FedController:
     '''
     def work(self):
         while not self.is_converged():
-            time.sleep(3)
+            time.sleep(2)
             for key, value in self.Controller_Connected.items():
                 self.Controller_Connected[key] = False
                 self.Controller_Connected_Socket[key].sendall('start!'.encode())
